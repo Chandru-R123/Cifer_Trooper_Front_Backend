@@ -1,0 +1,138 @@
+================================================================================
+  CIFERTROOPER ACADEMY — FRONTEND API & ROUTE REFERENCE
+  For Backend Team Use
+  Generated: 2026-05-07
+  Source project: cifertrooper-academy (TanStack Start · React 19 · TypeScript 5.8)
+================================================================================
+
+  HOW THE FRONTEND CALLS THE BACKEND
+  ───────────────────────────────────
+  All HTTP calls go through a single thin wrapper at:
+    src/lib/api.ts
+
+  Dual-Mode Strategy:
+    The frontend is designed to work out-of-the-box using local static data
+    from `src/lib/courses.ts` and component-level data. API calls are implemented 
+    but often commented out for initial static deployment.
+    To enable live data, un-comment the `apiGet` calls in relevant components.
+
+  Base URL:
+    const BASE_URL = "";        ← empty string = same origin
+
+================================================================================
+  SECTION 1 — FRONTEND PAGE ROUTES  (Browser URLs)
+================================================================================
+
+  ┌─────────────────────────────────┬───────────────────────────────────────────────┐
+  │  Browser URL                    │  Page Component / File                        │
+  ├─────────────────────────────────┼───────────────────────────────────────────────┤
+  │  /                              │  src/routes/index.tsx          — Home / Academy│
+  │  /courses                       │  src/routes/courses.index.tsx  — [REDIRECTS → /]│
+  │  /courses/:slug                 │  src/routes/courses.$slug.tsx  — Course Detail │
+  │  /services                      │  src/routes/services.index.tsx — Services Home │
+  │  /services/:slug                │  src/routes/services_.$slug.tsx— Service Detail│
+  │  /contact-us                    │  src/routes/contact-us.tsx     — Contact page  │
+  │  /Play_Ground/Ip-Locator        │  src/routes/Play_Ground.Ip-Locator.tsx         │
+  │  /Play_Ground/Ip-Graber         │  src/routes/Play_Ground.Ip-Graber.tsx          │
+  └─────────────────────────────────┴───────────────────────────────────────────────┘
+
+  NOTE: The previous redirect from / to /courses has been reversed. / is now the 
+  main landing page, and /courses redirects to /.
+
+================================================================================
+  SECTION 2 — API ENDPOINTS  (Backend Requirements)
+================================================================================
+
+  Base prefix: /api/
+
+────────────────────────────────────────────────────────────────────────────────
+  2.1  GET  /api/courses
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Get all available courses for the catalog.
+  RESPONSE:    Array of Course objects (see Section 4 for schema).
+
+────────────────────────────────────────────────────────────────────────────────
+  2.2  GET  /api/courses/:slug
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Get full details for a specific course including modules.
+  RESPONSE:    Course object with modules array.
+
+────────────────────────────────────────────────────────────────────────────────
+  2.3  GET  /api/services/:slug
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Get details for a specific service (App Dev, Web Dev, etc).
+  RESPONSE:    Service object with sections, benefits, and FAQs.
+
+────────────────────────────────────────────────────────────────────────────────
+  2.4  GET  /api/tools/ip-lookup?ip={ip}
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Retrieve geographical and network information for an IP address.
+  RESPONSE:    { "ip": string, "location": string, "isp": string, "timezone": string, "coordinates": string, "as": string }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.5  GET  /api/tools/ip-grabber/logs
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Fetch list of all captured IP logs for the grabber tool.
+  RESPONSE:    { "logs": [ { "id": string, "ip": string, "userAgent": string, "timestamp": string, "location": string, "link": string } ] }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.6  POST  /api/tools/ip-grabber/create-link
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Create a new tracking link for the IP grabber.
+  BODY:        { "title": string, "redirectUrl": string }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.7  POST  /api/contact
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     General contact form submission.
+  BODY:        { "name": string, "email": string, "phone": string, "message": string }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.8  POST  /lead.json  (Legacy Lead Generation)
+────────────────────────────────────────────────────────────────────────────────
+  Purpose:     Course enrollment form submission (legacy compatibility).
+  BODY:        FormData
+  FIELDS:      name (string), phone (string), email (string), city (string),
+               page_title (string), page_url (string)
+
+================================================================================
+  SECTION 3 — DUAL-MODE COMPONENTS
+================================================================================
+
+  The following routes use the `getCourses` or `getCourseBySlug` helpers:
+  - `src/routes/index.tsx` (Academy Home)
+  - `src/routes/courses.$slug.tsx` (Details)
+
+  The following routes have internal fallback data and commented-out fetch blocks:
+  - `src/routes/services_.$slug.tsx`
+  - `src/routes/Play_Ground.Ip-Locator.tsx`
+  - `src/routes/Play_Ground.Ip-Graber.tsx`
+
+================================================================================
+  SECTION 4 — DATA SCHEMAS
+================================================================================
+
+  Course Object:
+  {
+    "slug": string,
+    "title": string,
+    "description": string,
+    "longDescription": string,
+    "icon": string,
+    "modules": [ { "id": string, "title": string, "content": string[] } ]
+  }
+
+  Service Object:
+  {
+    "title": string,
+    "subtitle": string,
+    "heroImageUrl": string,
+    "about": { "title": string, "description": string[], "ctaText": string, "imageUrl": string },
+    "sections": [ { "title": string, "items": [ { "title": string, "description": string, "list": string[] } ] } ],
+    "benefits": string[],
+    "faqs": [ { "question": string, "answer": string } ]
+  }
+
+================================================================================
+  END OF DOCUMENT
+================================================================================

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home Page Wireframe</title>
+  <style>
+    body { margin:0; font-family:sans-serif; background:#f5f5f5; color:#222; }
+    .section { border:2px solid #000; background:#fff; margin:20px; padding:15px; }
+    .header, .footer { background:#e0e0e0; }
+    .grid { display:flex; flex-wrap:wrap; gap:10px; }
+    .card { flex:1 1 30%; border:1px solid #000; background:#fafafa; padding:10px; }
+  </style>
+</head>
+<body>
+  <!-- Header – static logo & navigation (dynamic data: none) -->
+  <div class="section header"><strong>Header</strong></div>
+
+  <!-- Hero – can display dynamic data from /api/pages/home (title, subtitle, description) -->
+  <div class="section hero"><strong>Hero Section (dynamic content)</strong></div>
+
+  <!-- Stats Strip – dynamic numbers from backend -->
+  <div class="section stats"><strong>Stats Strip (dynamic numbers)</strong></div>
+
+  <!-- Services Grid – each service card can be populated via API -->
+  <div class="section services">
+    <div class="grid">
+      <div class="card">Service Card 1 (dynamic)</div>
+      <div class="card">Service Card 2 (dynamic)</div>
+      <div class="card">Service Card 3 (dynamic)</div>
+    </div>
+  </div>
+
+  <!-- Why Choose – feature list, dynamic -->
+  <div class="section why"><strong>Why Choose Section (dynamic)</strong></div>
+
+  <!-- Testimonials – carousel, data from backend -->
+  <div class="section testimonials"><strong>Testimonials Carousel (dynamic)</strong></div>
+
+  <!-- Brands ticker – logos, dynamic list -->
+  <div class="section brands"><strong>Brands Ticker (dynamic)</strong></div>
+
+  <!-- Footer – static links -->
+  <div class="section footer"><strong>Footer</strong></div>
+</body>
+</html>

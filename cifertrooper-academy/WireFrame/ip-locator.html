@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IP Locator Tool Wireframe</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#f5f5f5;color:#222;}
+    .section{border:2px solid #000;background:#fff;margin:20px;padding:15px;}
+    .header,.footer{background:#e0e0e0;}
+    .form{display:flex;gap:10px;align-items:center;}
+    .input{flex:1;padding:5px;border:1px solid #000;background:#fafafa;}
+    .button{padding:5px 10px;border:1px solid #000;background:#fff;cursor:pointer;}
+  </style>
+</head>
+<body>
+  <div class="section header"><strong>Header (static)</strong></div>
+
+  <!-- IP lookup form – can call GET /api/tools/ip-lookup – dynamic result -->
+  <div class="section form">
+    <div class="form">
+      <input type="text" class="input" placeholder="Enter IP (e.g. 8.8.8.8)"/>
+      <button class="button" type="button">Locate IP</button>
+    </div>
+    <!-- result area (filled after API call) -->
+    <div class="result" style="margin-top:15px;">Result will appear here.</div>
+  </div>
+
+  <div class="section footer"><strong>Footer (static)</strong></div>
+</body>
+</html>
