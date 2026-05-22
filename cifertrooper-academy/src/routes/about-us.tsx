@@ -33,38 +33,19 @@ interface AboutContent {
   team?: { name: string; role: string; bio?: string; image?: string }[];
 }
 
-const fallback: AboutContent = {
-  heading: "Who We Are",
-  description: "Cifertrooper is a full-service digital agency and training academy specializing in web, mobile, cybersecurity, and AI solutions. Founded in 2018, we have helped 200+ businesses and trained 3000+ students.",
-  mission: "Empowering businesses and individuals through cutting-edge technology and education.",
-  vision: "To be the most trusted digital partner and cybersecurity training institute in South Asia.",
-  values: ["Innovation", "Integrity", "Excellence", "Community"],
-  stats: [
-    { label: "Projects Delivered", value: "200+" },
-    { label: "Happy Clients", value: "150+" },
-    { label: "Team Members", value: "35+" },
-    { label: "Years Experience", value: "6+" },
-  ],
-  team: [
-    { name: "Chandru K.", role: "CEO & Founder", bio: "Cybersecurity expert with 10+ years in ethical hacking and digital strategy." },
-    { name: "Alice Johnson", role: "CTO", bio: "Full-stack architect specializing in scalable cloud systems." },
-    { name: "Bob Smith", role: "Head of Security", bio: "Certified ethical hacker and red team specialist." },
-    { name: "Carol White", role: "Lead Designer", bio: "UI/UX expert with a passion for accessible, beautiful interfaces." },
-  ],
-};
-
 const gradientText = "bg-gradient-to-r from-accent via-accent/80 to-accent/60 bg-clip-text text-transparent";
 
 const valueIcons = [Award, Target, Heart, Users, Briefcase, Eye];
 
 function AboutPage() {
-  const { data: content } = useQuery({
+  const { data: content, isLoading } = useQuery({
     queryKey: ["page", "about-us"],
     queryFn: () => getPage<AboutContent>("about-us"),
-    retry: false,
   });
 
-  const d: AboutContent = { ...fallback, ...content };
+  if (isLoading) return <div className="flex items-center justify-center min-h-[60vh]"><div className="animate-pulse w-16 h-1 bg-accent" /></div>;
+
+  const d = content ?? {};
 
   return (
     <div className="bg-background text-foreground overflow-x-hidden">
@@ -90,7 +71,7 @@ function AboutPage() {
       {/* ── Stats ────────────────────────────────────────────────────── */}
       <section className="border-y border-border bg-card py-14">
         <div className="container-page grid grid-cols-2 md:grid-cols-4 gap-8">
-          {(d.stats ?? fallback.stats!).map((stat, i) => (
+          {(d.stats ?? []).map((stat: { label: string; value: string }, i: number) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 16 }}
