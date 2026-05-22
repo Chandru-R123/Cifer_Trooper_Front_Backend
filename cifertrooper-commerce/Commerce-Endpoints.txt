@@ -1,0 +1,145 @@
+================================================================================
+  CIFERTROOPER COMMERCE — FRONTEND API & ROUTE REFERENCE
+  For Backend Team Use
+  Last Updated: 2026-05-07
+  Source project: cifertrooper-commerce (TanStack Start · React 19 · TypeScript 5.8)
+================================================================================
+
+  HOW THE FRONTEND CALLS THE BACKEND
+  ───────────────────────────────────
+  All HTTP calls go through a single thin wrapper at:
+    src/lib/api.ts
+
+  Base URL:
+    const BASE_URL = "";        ← empty string = same origin
+    Change this to a full URL (e.g. "https://api.cifertrooper.in") for
+    cross-origin deployments or Cloudflare Workers environments.
+
+  GET wrapper:
+    fetch(`${BASE_URL}{path}`, { headers: { Accept: "application/json" } })
+
+  POST wrapper:
+    fetch(`${BASE_URL}{path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+    })
+
+  Error handling (Dual-Mode):
+    Every GET call has a fallback to hardcoded default data (Static Mode).
+    Every POST call surface shows user-facing error text on failure.
+
+================================================================================
+  SECTION 1 — FRONTEND PAGE ROUTES (Browser URLs)
+================================================================================
+
+  These are the client-side routes handled by TanStack Router.
+
+  ┌─────────────────────────────┬───────────────────────────────────────────────┐
+  │ Browser URL                 │ Page Component / File                         │
+  ├─────────────────────────────┼───────────────────────────────────────────────┤
+  │ /                           │ src/routes/index.tsx          — Homepage      │
+  │ /shop                       │ src/routes/shop.tsx           — Product list  │
+  │ /product/:slug              │ src/routes/product.$slug.tsx  — Product detail│
+  │ /cart                       │ src/routes/cart.tsx           — Shopping Cart │
+  │ /checkout                   │ src/routes/checkout.tsx       — Checkout Flow │
+  │ /auth                       │ src/routes/auth.tsx           — Login/Register│
+  │ /account                    │ src/routes/account.tsx        │ User Dashboard│
+  │ /order-success              │ src/routes/order-success.tsx  │ Order Confirm │
+  │ /services                   │ src/routes/services.index.tsx — Services list │
+  │ /services/:slug             │ src/routes/services_.$slug.tsx— Service detail│
+  │ /contact-us                 │ src/routes/contact-us.tsx     — Contact page  │
+  └─────────────────────────────┴───────────────────────────────────────────────┘
+
+================================================================================
+  SECTION 2 — GENERAL CONTENT API ENDPOINTS
+================================================================================
+
+  2.1  GET  /api/pages/home
+  Purpose: Populate Hero, Services Grid, Why Choose, Testimonials, Brands.
+
+  2.2  GET  /api/pages/services
+  Purpose: Populate the main services listing page.
+
+  2.3  GET  /api/services/:slug
+  Purpose: Render a full service detail page (e.g. website-development).
+
+  2.4  GET  /api/pages/contact-us
+  Purpose: Populate contact details and social links.
+
+  2.5  POST /api/contact
+  Body: { name, email, phone, message }
+  Purpose: Contact form submission.
+
+  2.6  POST /api/newsletter
+  Body: { email }
+  Purpose: Newsletter subscription.
+
+================================================================================
+  SECTION 3 — E-COMMERCE ENDPOINTS
+================================================================================
+
+  3.1  GET  /api/commerce/products
+  Query Params: ?category=Gadgets|Kits
+  Purpose: Fetch all products or filtered by category.
+
+  3.2  GET  /api/commerce/products/:slug
+  Purpose: Fetch detailed information for a specific product.
+
+  3.3  GET  /api/commerce/cart
+  Headers: Authorization: Bearer <token>
+  Purpose: Fetch the server-side cart for the authenticated user.
+
+  3.4  POST /api/commerce/cart/sync
+  Headers: Authorization: Bearer <token>
+  Body: { items: [{ productId, quantity }] }
+  Purpose: Sync local cart state to backend on login.
+
+  3.5  POST /api/commerce/checkout
+  Headers: Authorization: Bearer <token> (optional)
+  Body: { items, billing: { name, email, phone, address, city, state, pincode }, paymentMethod: "upi"|"cod" }
+  Purpose: Submit order. Returns { orderId, status, total, paymentUrl? }.
+
+  3.6  GET  /api/commerce/orders
+  Headers: Authorization: Bearer <token>
+  Purpose: Fetch order history for the user.
+
+  3.7  GET  /api/commerce/orders/:orderId
+  Purpose: Fetch details for a specific order.
+
+================================================================================
+  SECTION 4 — AUTH & USER ENDPOINTS
+================================================================================
+
+  4.1  POST /api/auth/register
+  Body: { name, email, password }
+  Response: { id, name, email, token }
+
+  4.2  POST /api/auth/login
+  Body: { email, password }
+  Response: { id, name, email, token }
+
+  4.3  POST /api/auth/logout
+  Headers: Authorization: Bearer <token>
+
+  4.4  GET  /api/user/profile
+  Headers: Authorization: Bearer <token>
+
+  4.5  PUT  /api/user/profile
+  Headers: Authorization: Bearer <token>
+  Body: { name, phone, address: { line1, city, state, pincode } }
+
+================================================================================
+  SECTION 5 — SERVICE SLUGS REFERENCE
+================================================================================
+  logo-branding-design
+  ui-ux-design
+  website-development
+  e-commerce-development
+  custom-app-development
+  online-marketing
+  ai-automation-chatbot-solutions
+
+================================================================================
+  END OF DOCUMENT
+================================================================================

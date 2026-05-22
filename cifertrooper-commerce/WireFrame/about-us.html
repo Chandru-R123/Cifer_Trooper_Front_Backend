@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us Page Wireframe</title>
+  <style>
+    body {margin:0;font-family:sans-serif;background:#f5f5f5;color:#222;}
+    .section{border:2px solid #000;background:#fff;margin:20px;padding:15px;}
+    .header,.footer{background:#e0e0e0;}
+    .grid{display:flex;flex-wrap:wrap;gap:10px;}
+    .card{flex:1 1 45%;border:1px solid #000;background:#fafafa;padding:10px;}
+  </style>
+</head>
+<body>
+  <div class="section header"><strong>Header (static)</strong></div>
+
+  <!-- Hero – static image, dynamic subtitle could come from API -->
+  <div class="section hero"><strong>Hero Area (dynamic subtitle)</strong></div>
+
+  <!-- Stats strip – dynamic numbers from backend (GET /api/pages/about-us) -->
+  <div class="section stats"><strong>Stats Strip (dynamic)</strong></div>
+
+  <!-- Services cards – can be populated via API (logo‑branding‑design, ui‑ux‑design, …) -->
+  <div class="section services">
+    <div class="grid">
+      <div class="card">Service Card 1 (dynamic)</div>
+      <div class="card">Service Card 2 (dynamic)</div>
+      <div class="card">Service Card 3 (dynamic)</div>
+      <div class="card">Service Card 4 (dynamic)</div>
+    </div>
+  </div>
+
+  <!-- Values section – dynamic list of value cards -->
+  <div class="section values"><strong>Values (dynamic)</strong></div>
+
+  <!-- Testimonials – dynamic accordion -->
+  <div class="section testimonials"><strong>Testimonials (dynamic)</strong></div>
+
+  <!-- Why list – bullet points, dynamic -->
+  <div class="section why-list"><strong>Why List (dynamic)</strong></div>
+
+  <!-- Collage images – dynamic gallery – can be filled from API -->
+  <div class="section collage"><strong>Image Collage (dynamic)</strong></div>
+
+  <div class="section footer"><strong>Footer (static)</strong></div>
+</body>
+</html>

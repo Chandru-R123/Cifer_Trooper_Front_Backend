@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us Page Wireframe</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#f5f5f5;color:#222;}
+    .section{border:2px solid #000;background:#fff;margin:20px;padding:15px;}
+    .header,.footer{background:#e0e0e0;}
+    .info{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .form{border:1px solid #000;background:#fafafa;padding:10px;}
+  </style>
+</head>
+<body>
+  <div class="section header"><strong>Header (static navigation)</strong></div>
+
+  <!-- Hero – dynamic title/subtitle from API -->
+  <div class="section hero"><strong>Hero (dynamic title/subtitle)</strong></div>
+
+  <!-- Contact information – can be populated via GET /api/pages/contact-us -->
+  <div class="section info">
+    <div class="card">Email: <span id="email">cifertrooper@gmail.com</span></div>
+    <div class="card">Phone: <span id="phone">+91 80155 77055</span></div>
+    <div class="card">Address: <span id="address">No:04, Kathir IT Park, …</span></div>
+    <div class="card">Hours: <span id="hours">Mon‑Sat 9:00‑19:00</span></div>
+  </div>
+
+  <!-- Contact form – static UI, submission POST /api/contact – dynamic on success -->
+  <div class="section form"><strong>Contact Form (POST /api/contact)</strong>
+    <!-- fields placeholder -->
+    <input type="text" placeholder="Name" style="width:100%;margin:5px 0;"/>
+    <input type="email" placeholder="Email" style="width:100%;margin:5px 0;"/>
+    <input type="text" placeholder="Phone" style="width:100%;margin:5px 0;"/>
+    <textarea placeholder="Message" style="width:100%;margin:5px 0;"/>
+    <button type="submit" style="margin-top:5px;"/>Send Message</button>
+  </div>
+
+  <div class="section footer"><strong>Footer (static)</strong></div>
+</body>
+</html>

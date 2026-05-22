@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FAQ Page Wireframe</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f5f5f5;
+        color: #222;
+      }
+      .section {
+        border: 2px solid #000;
+        background: #fff;
+        margin: 20px;
+        padding: 15px;
+      }
+      .header,
+      .footer {
+        background: #e0e0e0;
+      }
+      .accordion {
+        border-top: 1px solid #000;
+      }
+      .question {
+        padding: 10px;
+        cursor: pointer;
+        background: #fafafa;
+      }
+      .answer {
+        padding: 10px;
+        display: none;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section header"><strong>Header (static)</strong></div>
+
+    <!-- FAQ list – fetched from GET /api/pages/faq – each item dynamic -->
+    <div class="section faq" id="faq-accordion">
+      <strong>FAQ Accordion (dynamic)</strong>
+      <!-- example static markup for reference -->
+      <div class="accordion">
+        <div class="question">What is your refund policy?</div>
+        <div class="answer">We offer a 30‑day money‑back guarantee.</div>
+      </div>
+    </div>
+
+    <div class="section footer"><strong>Footer (static)</strong></div>
+  </body>
+</html>

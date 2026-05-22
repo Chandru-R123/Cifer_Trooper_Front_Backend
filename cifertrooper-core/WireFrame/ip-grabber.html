@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IP Grabber Tool Wireframe</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f5f5f5;
+        color: #222;
+      }
+      .section {
+        border: 2px solid #000;
+        background: #fff;
+        margin: 20px;
+        padding: 15px;
+      }
+      .header,
+      .footer {
+        background: #e0e0e0;
+      }
+      .log {
+        font-family: monospace;
+        background: #fafafa;
+        padding: 10px;
+        border: 1px solid #000;
+        max-height: 300px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section header"><strong>Header (static)</strong></div>
+
+    <!-- Logs display – fetched from GET /api/tools/ip-grabber/logs – dynamic -->
+    <div class="section logs">
+      <strong>IP Grabber Logs (dynamic)</strong>
+      <pre class="log">Loading logs...</pre>
+    </div>
+
+    <div class="section footer"><strong>Footer (static)</strong></div>
+  </body>
+</html>

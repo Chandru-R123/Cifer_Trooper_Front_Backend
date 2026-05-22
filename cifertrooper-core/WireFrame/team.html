@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Team Page Wireframe</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f5f5f5;
+        color: #222;
+      }
+      .section {
+        border: 2px solid #000;
+        background: #fff;
+        margin: 20px;
+        padding: 15px;
+      }
+      .header,
+      .footer {
+        background: #e0e0e0;
+      }
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .card {
+        flex: 1 1 30%;
+        border: 1px solid #000;
+        background: #fafafa;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section header"><strong>Header (static navigation)</strong></div>
+
+    <!-- Hero – static title, optional dynamic subtitle from API -->
+    <div class="section hero"><strong>Hero (dynamic subtitle)</strong></div>
+
+    <!-- Team members – data from GET /api/pages/team – each card dynamic -->
+    <div class="section members">
+      <div class="grid">
+        <div class="card">Member 1 (dynamic)</div>
+        <div class="card">Member 2 (dynamic)</div>
+        <div class="card">Member 3 (dynamic)</div>
+      </div>
+    </div>
+
+    <div class="section footer"><strong>Footer (static)</strong></div>
+  </body>
+</html>

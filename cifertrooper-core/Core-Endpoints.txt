@@ -1,0 +1,303 @@
+================================================================================
+  CIFERTROOPER-UI — FRONTEND API & ROUTE REFERENCE
+  For Backend Team Use
+  Generated: 2026-05-07
+  Source project: cifertrooper-ui  (TanStack Start · React 19 · TypeScript 5.8)
+================================================================================
+
+  HOW THE FRONTEND CALLS THE BACKEND
+  ───────────────────────────────────
+  All HTTP calls go through a single thin wrapper at:
+    src/lib/api.ts
+
+  Base URL:
+    const BASE_URL = "";        ← empty string = same origin
+    Change this to a full URL (e.g. "https://api.cifertrooper.in") for
+    cross-origin deployments or Cloudflare Workers environments.
+
+  GET wrapper:
+    fetch(`${BASE_URL}{path}`, { headers: { Accept: "application/json" } })
+    Throws if response is not 2xx.
+
+  POST wrapper:
+    fetch(`${BASE_URL}{path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(payload),
+    })
+    Throws if response is not 2xx.
+
+  Error handling:
+    Every GET call has a .catch() that falls back to hardcoded default data.
+    The frontend will NEVER crash if the API is down — it just shows defaults.
+    Every POST call surface shows user-facing error text on failure.
+
+================================================================================
+  SECTION 1 — FRONTEND PAGE ROUTES  (Browser URLs)
+================================================================================
+
+  These are the client-side routes. The backend does NOT serve these pages —
+  TanStack Start handles them via SSR or SPA routing.
+
+  ┌─────────────────────────────┬───────────────────────────────────────────────┐
+  │  Browser URL                │  Page Component / File                        │
+  ├─────────────────────────────┼───────────────────────────────────────────────┤
+  │  /                          │  src/routes/index.tsx          — Homepage      │
+  │  /about-us                  │  src/routes/about-us.tsx       — About page    │
+  │  /services                  │  src/routes/services.index.tsx — Services list │
+  │  /services/:slug            │  src/routes/services_.$slug.tsx — Service detail│
+  │  /contact-us                │  src/routes/contact-us.tsx     — Contact page  │
+  │  /faq                       │  src/routes/faq.tsx            — FAQ page      │
+  │  /team                      │  src/routes/team.tsx           — Team page     │
+  │  /Play_Ground/Ip-Locator    │  src/routes/Play_Ground.Ip-Locator.tsx         │
+  │  /Play_Ground/Ip-Graber     │  src/routes/Play_Ground.Ip-Graber.tsx          │
+  └─────────────────────────────┴───────────────────────────────────────────────┘
+
+  Note: Most pages are currently in STATIC MODE (using fallback constants).
+        API blocks exist in the components — ready to activate.
+        See Section 2 below for the schemas when the backend is ready.
+
+================================================================================
+  SECTION 2 — API ENDPOINTS  (Backend must implement all of these)
+================================================================================
+
+  Base prefix for all endpoints:  /api/
+  All requests and responses use JSON (application/json).
+  All responses must include: Content-Type: application/json
+
+────────────────────────────────────────────────────────────────────────────────
+  2.1  GET  /api/pages/about-us
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/about-us.tsx  (AboutPage)
+  Trigger:     On initial page load.
+  Purpose:     Dynamically populate all content sections of the About Us page.
+
+  RESPONSE SCHEMA:
+  {
+    "stats": [ { "number": string, "label": string } ],
+    "services": [ { "title": string, "desc": string, "img": string, "stat": string, "unit": string } ],
+    "values": [ { "icon": string, "title": string, "desc": string } ],
+    "testimonials": [ { "quote": string, "name": string, "role": string } ],
+    "whyList": [ string ],
+    "collage": [ { "img": string, "alt": string, "tall": boolean } ]
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.2  GET  /api/pages/home
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/index.tsx  (HomePage)
+  Trigger:     On initial page load.
+  Purpose:     Dynamically populate Hero, Services Grid, Why Choose features,
+               About snippet, Testimonials, and Brand logos.
+
+  RESPONSE SCHEMA:
+  {
+    "hero": { "title": string, "subtitle": string, "description": string },
+    "services": [ { "id": string, "title": string, "counter": string, "imageUrl": string, "description": string } ],
+    "whyChoose": [ { "id": string, "number": string, "title": string, "description": string } ],
+    "about": { "text1": string, "text2": string, "text3": string },
+    "testimonials": [ { "id": string, "text": string, "name": string, "position": string } ],
+    "brands": [ { "id": string, "name": string, "imageUrl": string } ]
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.3  GET  /api/pages/services
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/services.index.tsx  (ServicesPage)
+  Trigger:     On initial page load.
+  Purpose:     Dynamically populate the main services listing page.
+
+  RESPONSE SCHEMA:
+  {
+    "hero": { "title": string, "subtitle": string, "description": string },
+    "services": [ { "id": number, "title": string, "description": string, "image": string, "link": string } ],
+    "promise": { "title": string, "description": string }
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.4  GET  /api/services/:slug
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/services_.$slug.tsx  (ServiceDetailPage)
+  Trigger:     On page load, re-triggers when :slug changes
+  Purpose:     Render a full service detail page.
+
+  RESPONSE SCHEMA:
+  {
+    "title": "string", "subtitle": "string",
+    "about": { "title": "string", "description": "string", "points": ["string"], "imageUrl": "string" },
+    "sections": [ { "title": "string", "description": "string", "imageUrl": "string" } ],
+    "benefits": ["string"],
+    "faqs": [ { "question": "string", "answer": "string" } ]
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.5  GET  /api/pages/team
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/team.tsx  (TeamPage)
+  Trigger:     On initial page load.
+  Purpose:     Dynamically populate the team page hero and member listing.
+
+  RESPONSE SCHEMA:
+  {
+    "hero": { "title": string, "subtitle": string },
+    "members": [ { "id": string, "name": string, "role": string, "image": string, "bio": string, "socials": { ... } } ]
+  }
+
+────────────────────────────────────────────────────────────────────────────────
+  2.6  GET  /api/pages/faq
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/faq.tsx  (FaqPage)
+  Trigger:     On initial page load
+  Purpose:     Populate FAQ accordion items.
+
+  RESPONSE SCHEMA:  Array<{ question: string; answer: string }>
+
+────────────────────────────────────────────────────────────────────────────────
+  2.7  GET  /api/pages/contact-us
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/contact-us.tsx  (ContactPage)
+  Trigger:     On initial page load.
+  Purpose:     Populate contact details, hero content, and social links.
+
+  RESPONSE SCHEMA:
+  {
+    "hero": { "title": string, "subtitle": string },
+    "info": { "email": string, "phone": string, "address": string, "hours": string },
+    "socials": { "facebook": string, "instagram": string, "twitter": string, "linkedin": string }
+  }
+
+================================================================================
+  SECTION 3 — POST ENDPOINTS  (Form submissions)
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  3.1  POST  /api/contact
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/components/ContactForm.tsx
+  Trigger:     User submits the "Send message" form
+
+  REQUEST BODY: { "name": string, "email": string, "phone": string, "message": string }
+
+────────────────────────────────────────────────────────────────────────────────
+  3.2  POST  /api/newsletter
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/components/NewsletterForm.tsx
+  Trigger:     User submits email to newsletter sign-up
+
+  REQUEST BODY: { "email": string }
+
+================================================================================
+  SECTION 4 — HTTP CONVENTIONS
+================================================================================
+
+  4.1  Status Codes Expected
+    200 OK / 201 Created — Success
+    400 Bad Request — Validation Error
+    404 Not Found — Fallback to defaults
+    500 Server Error — Fallback to defaults
+
+  4.2  Required Response Headers
+    Content-Type: application/json; charset=utf-8
+    Access-Control-Allow-Origin: * (if separate domain)
+
+================================================================================
+  SECTION 5 — COMPLETE ENDPOINT SUMMARY TABLE
+================================================================================
+
+  ┌────────┬──────────────────────────────┬────────────────────────┬───────────┐
+  │ Method │ Endpoint                     │ Called From            │ Required? │
+  ├────────┼──────────────────────────────┼────────────────────────┼───────────┤
+  │ GET    │ /api/pages/about-us          │ /about-us              │ Yes       │
+  │ GET    │ /api/pages/home              │ /  (homepage)          │ Yes       │
+  │ GET    │ /api/pages/services          │ /services              │ Yes       │
+  │ GET    │ /api/services/:slug          │ /services/:slug        │ Yes       │
+  │ GET    │ /api/pages/team              │ /team                  │ Yes       │
+  │ GET    │ /api/pages/faq               │ /faq                   │ Yes       │
+  │ GET    │ /api/pages/contact-us        │ /contact-us            │ Yes       │
+  │ POST   │ /api/contact                 │ /contact-us (form)     │ Yes       │
+  │ POST   │ /api/newsletter              │ footer/inline forms    │ Yes       │
+  │ GET    │ /api/tools/ip-lookup         │ /Play_Ground/Ip-Locator│ Yes       │
+  │ GET    │ /api/tools/ip-grabber/logs   │ /Play_Ground/Ip-Graber │ Yes       │
+  │ POST   │ /api/tools/ip-grabber/link   │ /Play_Ground/Ip-Graber │ Yes       │
+  └────────┴──────────────────────────────┴────────────────────────┴───────────┘
+
+================================================================================
+  SECTION 6 — SERVICE SLUGS
+================================================================================
+
+  These are the slug values the frontend uses for /api/services/:slug.
+
+    logo-branding-design
+    ui-ux-design
+    website-development
+    e-commerce-development
+    custom-app-development
+    online-marketing
+    ai-automation-chatbot-solutions
+
+================================================================================
+  SECTION 7 — DEPLOYMENT & ENVIRONMENT
+================================================================================
+
+  Frontend target: Cloudflare Workers
+  API Base URL: src/lib/api.ts -> const BASE_URL = "";
+
+================================================================================
+  SECTION 8 — EXAMPLE CURL COMMANDS
+================================================================================
+
+  curl -s http://localhost:3000/api/pages/home | python -m json.tool
+  curl -s http://localhost:3000/api/services/ui-ux-design | python -m json.tool
+  curl -X POST http://localhost:3000/api/contact -H "Content-Type: application/json" -d '{"name":"Test","email":"test@test.com","message":"Hello"}'
+
+================================================================================
+  SECTION 9 — PLAY GROUND TOOLS  (Standalone Utility Pages)
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+  9.1  GET  /api/tools/ip-lookup
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/Play_Ground.Ip-Locator.tsx
+  Query Param: ?ip=string (optional, defaults to request IP)
+  Purpose:     Get geo-location and network data for an IP address.
+
+  RESPONSE SCHEMA:
+  { "ip": string, "location": string, "isp": string, "timezone": string, "coordinates": string, "as": string }
+
+────────────────────────────────────────────────────────────────────────────────
+  9.2  GET  /api/tools/ip-grabber/logs
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/Play_Ground.Ip-Graber.tsx
+  Purpose:     Retrieve all logs captured by tracking links.
+
+  RESPONSE SCHEMA:
+  { "logs": [ { "id": string, "ip": string, "userAgent": string, "timestamp": string, "location": string, "link": string } ] }
+
+────────────────────────────────────────────────────────────────────────────────
+  9.3  POST /api/tools/ip-grabber/create-link
+────────────────────────────────────────────────────────────────────────────────
+  Called by:   src/routes/Play_Ground.Ip-Graber.tsx
+  Purpose:     Create a new tracking link.
+  Payload:     { "title": string, "redirectUrl": string }
+  Response:    { "token": string, "trackingUrl": string }
+
+================================================================================
+  SECTION 10 — COMPONENT API MAPPING
+================================================================================
+
+  The following components are "API-Ready" with commented-out fetch blocks:
+
+  | Route | Component | Endpoint |
+  |-------|-----------|----------|
+  | `/` | `HomePage` | GET /api/pages/home |
+  | `/about-us` | `AboutPage` | GET /api/pages/about-us |
+  | `/services` | `ServicesPage` | GET /api/pages/services |
+  | `/services/:slug` | `ServiceDetailPage` | GET /api/services/${slug} |
+  | `/faq` | `FaqPage` | GET /api/pages/faq |
+  | `/team` | `TeamPage` | GET /api/pages/team |
+  | `/Play_Ground/Ip-Locator` | `IpLocator` | GET /api/tools/ip-lookup |
+  | `/Play_Ground/Ip-Graber` | `IpGrabber` | GET /api/tools/ip-grabber/logs |
+
+================================================================================
+END OF DOCUMENT
+================================================================================

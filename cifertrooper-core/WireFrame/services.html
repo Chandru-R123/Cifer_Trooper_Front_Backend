@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Services List Page Wireframe</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: sans-serif;
+        background: #f5f5f5;
+        color: #222;
+      }
+      .section {
+        border: 2px solid #000;
+        background: #fff;
+        margin: 20px;
+        padding: 15px;
+      }
+      .header,
+      .footer {
+        background: #e0e0e0;
+      }
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .card {
+        flex: 1 1 30%;
+        border: 1px solid #000;
+        background: #fafafa;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section header"><strong>Header (static navigation)</strong></div>
+
+    <!-- Hero – static image, optional dynamic subtitle -->
+    <div class="section hero"><strong>Hero (dynamic subtitle)</strong></div>
+
+    <!-- Services Grid – each tile can be filled via API GET /api/pages/services -->
+    <div class="section services">
+      <div class="grid">
+        <div class="card">Service Card A (dynamic)</div>
+        <div class="card">Service Card B (dynamic)</div>
+        <div class="card">Service Card C (dynamic)</div>
+      </div>
+    </div>
+
+    <!-- Footer – static links -->
+    <div class="section footer"><strong>Footer (static)</strong></div>
+  </body>
+</html>
